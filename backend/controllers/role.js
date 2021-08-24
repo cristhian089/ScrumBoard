@@ -24,4 +24,18 @@ const listRole = async (req, res) =>{
     return res.status(200).send({role})
 };
 
-module.exports = { registerRole, listRole};
+const updateRole = async (req,res) =>{
+    if (!req.body.description)
+    return res.status(400).send("Process failed: Incomplete data");
+
+
+  let role = await Role.findByIdAndUpdate(req.body._id, {
+    description: req.body.description,
+  });
+
+  if (!role) return res.status(400).send("Process failed: Error editing role");
+  return res.status(200).send({ role });
+
+}
+
+module.exports = { registerRole, listRole,updateRole};
